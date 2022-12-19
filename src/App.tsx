@@ -1,9 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Chat } from './components/Chat';
 function App() {
+
+  const [user, setUser] = useState<string>('')
+
+  const getUser = () => {
+    let nome = prompt("Digite seu nome");
+    setUser(nome? nome : 'Anônimo');
+  }
+
+  useEffect(() => {
+    let render = true;
+    function firstRender() {
+      if (render) {
+        getUser();
+      }
+    }
+    firstRender();
+  })
+
   const firebaseApp = initializeApp({
     apiKey: "AIzaSyA37Ese085UtU3r6zNQHa1E91iAwU6DH3o",
     authDomain: "chatapp-bbbf4.firebaseapp.com",
@@ -28,7 +46,7 @@ function App() {
   return (
     <>
       <Header />
-      <Chat />
+      <Chat user={user} />
     </>
   )
 }

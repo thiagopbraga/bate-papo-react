@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { ChatBody, ChatContainer, ChatFooter, ChatFooterButton, ChatFooterInput, ChatHeader, ChatHeaderSubtitle, ChatHeaderTitle, ChatMenssage, ChatMenssageAuthor } from "./styles";
 
-export function Chat() {
-
+export function Chat(props: any) {
+    console.log(props)
     const [mensage, setMensage] = useState<string>('')
-    const [ mensages, setMensages ] = useState<string[]>([])
+    const [mensages, setMensages] = useState<string[]>([])
     const [valorInput, setValorInput] = useState<string>('')
-    const [ mensageAuthor, setMensageAuthor ] = useState<string>('')
-    
+    const [mensageAuthor, setMensageAuthor] = useState<string>('')
+    const { user } = props
+
     const handleSendMensage = () => {
         console.log('send this mensage: ', mensage)
         setMensages([...mensages, valorInput])
@@ -23,7 +24,7 @@ export function Chat() {
             <ChatBody>
                 {(mensages.map((mensage) => (
                     <ChatMenssage>
-                        <ChatMenssageAuthor>Usuário</ChatMenssageAuthor>
+                        <ChatMenssageAuthor>{user}</ChatMenssageAuthor>
                         {mensage}
                     </ChatMenssage>
                 )))}
@@ -31,7 +32,7 @@ export function Chat() {
             <ChatFooter>
                 <ChatFooterInput type="text" onChange={(text) => {
                     setValorInput(text.target.value);
-                }} value={valorInput} placeholder="Escreva sua mensagem aqui"/>
+                }} value={valorInput} placeholder="Escreva sua mensagem aqui" />
                 <ChatFooterButton onClick={handleSendMensage}>Send</ChatFooterButton>
             </ChatFooter>
         </ChatContainer>
